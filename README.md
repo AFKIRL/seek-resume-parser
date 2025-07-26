@@ -32,7 +32,7 @@ Requirements
 * This redirects you to another page that displays all the submitted data
 
 # Demo URL
-https://www.youtube.com/watch?v=mnyMOsYYvAs
+https://drive.google.com/file/d/1Syj09fA3LI48L23WC3QsRHvseihWUFJS/view?usp=sharing
 
 # Images
 https://drive.google.com/drive/folders/13lLOUAURxhS9mwtcjjkFxQHqEeU1iKQy?usp=sharing

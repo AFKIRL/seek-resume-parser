@@ -1,30 +1,19 @@
-// app/api/upload-resume/route.js
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-import formidable from 'formidable';
 
-export const config = {
-  api: {
-    bodyParser: false, // required for formidable
-  },
-};
-
-const parseForm = req =>
-  new Promise((resolve, reject) => {
-    const form = new formidable.IncomingForm({ keepExtensions: true });
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      resolve(files);
-    });
-  });
-
-export async function POST(req) {
+export async function POST(request) {
   try {
-    const files = await parseForm(req);
-    const resume = files.resume;
+    const formData = await request.formData();
+    const file = formData.get('resume');
 
-    // TODO: Add logic to extract info from resume.path (PDF/DOCX parsing)
+    if (!file || typeof file === 'string') {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // You can now parse buffer using pdf-parse, etc.
+    // For now, mock extracted data
     const extractedData = {
       firstName: 'John',
       lastName: 'Doe',
@@ -32,12 +21,17 @@ export async function POST(req) {
       contactNumber: '+1234567890',
       workExperience: 'Software Developer at XYZ Corp (2020 - 2023)',
       education: 'BSc Computer Science, ABC University, 2018',
-      skills: 'React, Node.js, Python'
+      skills: 'React, Node.js, Python',
+      fileInfo: {
+        filename: file.name,
+        type: file.type,
+        size: buffer.length,
+      }
     };
 
     return NextResponse.json(extractedData);
   } catch (error) {
-    console.error('Resume parsing failed:', error);
-    return NextResponse.json({ error: 'Failed to parse resume' }, { status: 500 });
+    console.error('Upload error:', error);
+    return NextResponse.json({ error: 'Failed to process file' }, { status: 500 });
   }
 }

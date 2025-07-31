@@ -87,7 +87,7 @@ export default function ResumeUploader() {
     formData.append('resume', fileToUpload);
 
     try {
-      const response = await fetch('http://localhost:8000/upload-resume', {
+      const response = await fetch('/api/upload-resume', {
   method: 'POST',
   body: formData,
 });
@@ -125,7 +125,7 @@ export default function ResumeUploader() {
       setIsSubmitted(true);
 
       try {
-        const response = await fetch('http://localhost:8000/submit-form', {
+        const response = await fetch('/api/submit-form', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(formData),

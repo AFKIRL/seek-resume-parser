@@ -133,7 +133,7 @@ function ResumeUploader() {
         const formData = new FormData();
         formData.append('resume', fileToUpload);
         try {
-            const response = await fetch('/api/upload-resume', {
+            const response = await fetch('http://localhost:8000/upload-resume', {
                 method: 'POST',
                 body: formData
             });
@@ -165,7 +165,7 @@ function ResumeUploader() {
             console.log('Form Submitted:', formData);
             setIsSubmitted(true);
             try {
-                const response = await fetch('/api/submit-form', {
+                const response = await fetch('http://localhost:8000/submit-form', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
